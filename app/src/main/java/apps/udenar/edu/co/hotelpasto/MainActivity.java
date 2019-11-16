@@ -9,7 +9,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         hotel_recycler_view=(RecyclerView)findViewById(R.id.hotel_recycler_view);
         hotel_recycler_view.setLayoutManager(new LinearLayoutManager(this));
         getHotelResponse();
+
+
     }
 
     private void getHotelResponse() {
@@ -44,6 +48,18 @@ public class MainActivity extends AppCompatActivity {
                 hotelArrayList= new ArrayList<>(response.body());
                 hotelAdapter= new HotelAdapter(MainActivity.this,hotelArrayList);
                 hotel_recycler_view.setAdapter(hotelAdapter);
+
+                hotelAdapter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, HotelView.class);
+                        Bundle b = new Bundle();
+                        b.putSerializable("hotel",hotelArrayList.get(hotel_recycler_view.getChildAdapterPosition(v)));
+                        intent.putExtras(b);
+                        startActivity(intent);
+                    }
+                });
+
                 Toast.makeText(MainActivity.this,"Success",Toast.LENGTH_SHORT).show();
             }
 

@@ -3,7 +3,9 @@ package apps.udenar.edu.co.hotelpasto;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Hotel {
+import java.io.Serializable;
+
+public class Hotel implements Serializable {
     @SerializedName("nombre")
     @Expose
     private String nombre;
